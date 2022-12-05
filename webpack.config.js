@@ -15,7 +15,7 @@ module.exports = {
                 use: ["babel-loader"],
             },
             {
-                test: /\.css$/,
+                test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
             },
         ],
@@ -25,6 +25,7 @@ module.exports = {
             template: path.resolve(__dirname, "src/index.html"),
         }),
     ],
+    stats: "minimal",
     devtool: "source-map",
     mode: "development",
     devServer: {
