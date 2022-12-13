@@ -34,6 +34,8 @@ const createTodoElement = (todo, index) => {
 
 displayTodo();
 
+// VERSION ALTERATIVE
+
 // const displayTodo = () => {
 //     for (const todo of todos) {
 //         document.querySelector("ul").innerHTML += `
