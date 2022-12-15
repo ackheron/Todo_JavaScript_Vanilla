@@ -1,6 +1,8 @@
 import "./style.css";
 
 const ul = document.querySelector("ul");
+const form = document.querySelector("form");
+const input = document.querySelector("form > input");
 
 const todos = [
     {
@@ -12,6 +14,13 @@ const todos = [
         done: true,
     },
 ];
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const text = input.value;
+    input.value = "";
+    addTodo(text);
+});
 
 const displayTodo = () => {
     const todosNode = todos.map((todo, index) => {
@@ -32,9 +41,17 @@ const createTodoElement = (todo, index) => {
     return li;
 };
 
+const addTodo = (text) => {
+    todos.push({
+        text,
+        done: false,
+    });
+    displayTodo();
+};
+
 displayTodo();
 
-// VERSION ALTERATIVE
+// VERSION ALTERATIVE DISPLAY TODO
 
 // const displayTodo = () => {
 //     for (const todo of todos) {
