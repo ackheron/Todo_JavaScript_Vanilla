@@ -1,4 +1,4 @@
-// import "./style.css";
+import "./style.css";
 
 const ul = document.querySelector("ul");
 const form = document.querySelector("form");
@@ -37,6 +37,7 @@ const createTodoElement = (todo, index) => {
     buttonDelete.innerText = "Supprimer";
     buttonDelete.addEventListener("click", (event) => {
         event.preventDefault();
+        event.stopPropagation();
         deleTodo(index);
     });
 
@@ -45,6 +46,10 @@ const createTodoElement = (todo, index) => {
         <p>${todo.text}</p>
     `;
     li.appendChild(buttonDelete);
+    li.addEventListener("click", (event) => {
+        event.preventDefault();
+        toggleTodo(index);
+    });
     return li;
 };
 
@@ -58,6 +63,11 @@ const addTodo = (text) => {
 
 const deleTodo = (index) => {
     todos.splice(index, 1);
+    displayTodo();
+};
+
+const toggleTodo = (index) => {
+    todos[index].done = !todos[index].done;
     displayTodo();
 };
 
