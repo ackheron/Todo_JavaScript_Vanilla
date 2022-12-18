@@ -8,10 +8,12 @@ const todos = [
     {
         text: "Je suis une todo",
         done: false,
+        editMode: false,
     },
     {
         text: "faire du javascript",
         done: true,
+        editMode: true,
     },
 ];
 
@@ -24,7 +26,11 @@ form.addEventListener("submit", (event) => {
 
 const displayTodo = () => {
     const todosNode = todos.map((todo, index) => {
-        return createTodoElement(todo, index);
+        if (todo.editMode) {
+            return createTodoEditElement(todo, index);
+        } else {
+            return createTodoElement(todo, index);
+        }
     });
     ul.innerHTML = "";
     ul.append(...todosNode);
@@ -41,11 +47,19 @@ const createTodoElement = (todo, index) => {
         deleTodo(index);
     });
 
+    const buttonEdit = document.createElement("button");
+    buttonEdit.innerText = "Éditer";
+    buttonEdit.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleEditMode(index);
+    });
+
     li.innerHTML = `
         <span class="todo ${todo.done ? "done" : ""}"></span>
         <p>${todo.text}</p>
     `;
-    li.appendChild(buttonDelete);
+    li.append(buttonEdit, buttonDelete);
     li.addEventListener("click", (event) => {
         event.preventDefault();
         toggleTodo(index);
@@ -53,6 +67,32 @@ const createTodoElement = (todo, index) => {
     return li;
 };
 
+const createTodoEditElement = (todo, index) => {
+    const li = document.createElement("li");
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = todo.text;
+
+    const buttonSave = document.createElement("button");
+    buttonSave.innerText = "Enregistrer";
+    buttonSave.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        editTodo(index, input);
+    });
+
+    const buttonCancel = document.createElement("button");
+    buttonCancel.innerText = "Annuler";
+    buttonCancel.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleEditMode(index);
+    });
+    li.append(input, buttonCancel, buttonSave);
+    return li;
+};
+
+// Ajout d'une todo
 const addTodo = (text) => {
     todos.push({
         text,
@@ -61,31 +101,30 @@ const addTodo = (text) => {
     displayTodo();
 };
 
+// Suppression d'un todo
 const deleTodo = (index) => {
     todos.splice(index, 1);
     displayTodo();
 };
 
+// Changement de status d'un todo
 const toggleTodo = (index) => {
     todos[index].done = !todos[index].done;
     displayTodo();
 };
 
+// Passage d'une todo en mode édition
+const toggleEditMode = (index) => {
+    todos[index].editMode = !todos[index].editMode;
+    displayTodo();
+};
+
+// Modification du texte d'une todo en mode edition
+const editTodo = (index, input) => {
+    const value = input.value;
+    todos[index].text = value;
+    todos[index].editMode = false;
+    displayTodo();
+};
+
 displayTodo();
-
-// VERSION ALTERATIVE DISPLAY TODO
-
-// const displayTodo = () => {
-//     for (const todo of todos) {
-//         document.querySelector("ul").innerHTML += `
-//        <li>
-//         <span class="todo ${todo.done ? "done" : ""}"></span>
-//         <p>${todo.text}</p>
-//         <button>Éditer</button>
-//         <button>Supprimer</button>
-//     </li>
-//         `;
-//     }
-// };
-
-// displayTodo();

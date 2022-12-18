@@ -59,7 +59,8 @@ li {
     padding: .625rem 0;
 }
 
-li p {
+li p,
+input {
     flex: 1;
 }
 
