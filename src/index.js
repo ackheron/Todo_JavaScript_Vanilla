@@ -36,6 +36,12 @@ const displayTodo = () => {
     ul.append(...todosNode);
 };
 
+/**
+ * Création d'un élément Todo
+ * @param {{text: string, done:boolean, editMode: boolean}} todo objet contenu dans le tableau todos
+ * @param {number} index nombre index de l'objet courant
+ * @returns
+ */
 const createTodoElement = (todo, index) => {
     const li = document.createElement("li");
 
@@ -67,6 +73,12 @@ const createTodoElement = (todo, index) => {
     return li;
 };
 
+/**
+ * Création d'un élément Todo en mode édition
+ * @param {{text: string, done:boolean, editMode: boolean}} todo objet contenu dans le tableau todos
+ * @param {number} index nombre index de l'objet courant
+ * @returns
+ */
 const createTodoEditElement = (todo, index) => {
     const li = document.createElement("li");
     const input = document.createElement("input");
@@ -92,37 +104,55 @@ const createTodoEditElement = (todo, index) => {
     return li;
 };
 
-// Ajout d'une todo
+/**
+ * Ajout d'une todo en empêchant l'entrée d'une chaîne vide
+ * @param {string} text
+ */
 const addTodo = (text) => {
     text = text.trim(); // méthode trim() supprime les espaces vides avant et après une chaîne de caractères
     if (text) {
         todos.push({
-            text,
+            text: `${text[0].toUpperCase()}${text.slice(1)}`,
             done: false,
         });
     }
+
     displayTodo();
 };
 
-// Suppression d'un todo
+/**
+ * Suppression d'une todo
+ * @param {number} index nombre de l'index de la todo
+ */
 const deleTodo = (index) => {
     todos.splice(index, 1);
     displayTodo();
 };
 
-// Changement de status d'un todo
+/**
+ * Changement de status d'un todo
+ * @param {number} index nombre de l'index de la todo
+ */
 const toggleTodo = (index) => {
     todos[index].done = !todos[index].done;
     displayTodo();
 };
 
-// Passage d'une todo en mode édition
+/**
+ * Passage d'une todo en mode édition
+ * @param {number} index nombre de l'index de la todo
+ */
 const toggleEditMode = (index) => {
     todos[index].editMode = !todos[index].editMode;
     displayTodo();
 };
 
 // Modification du texte d'une todo en mode edition
+/**
+ *
+ * @param {number} index
+ * @param {HTMLInputElement} input
+ */
 const editTodo = (index, input) => {
     const value = input.value;
     todos[index].text = value;
