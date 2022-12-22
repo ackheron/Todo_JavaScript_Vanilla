@@ -94,10 +94,13 @@ const createTodoEditElement = (todo, index) => {
 
 // Ajout d'une todo
 const addTodo = (text) => {
-    todos.push({
-        text,
-        done: false,
-    });
+    text = text.trim(); // méthode trim() supprime les espaces vides avant et après une chaîne de caractères
+    if (text) {
+        todos.push({
+            text,
+            done: false,
+        });
+    }
     displayTodo();
 };
 
