@@ -96,6 +96,13 @@ const createTodoEditElement = (todo, index) => {
         editTodo(index, input);
     });
 
+    // Ajout d'un écouteur sur l'input pour pouvoir enregistrer avec la touche entrée
+    input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            editTodo(index, input);
+        }
+    });
+
     const buttonCancel = document.createElement("button");
     buttonCancel.innerText = "Annuler";
     buttonCancel.className = "primary";
