@@ -68,9 +68,22 @@ const createTodoElement = (todo, index) => {
         <p class="${todo.done ? "done" : ""}">${todo.text}</p>
     `;
     li.append(buttonEdit, buttonDelete);
+    // écouteur sur li qui appelle la fonction toggleTodo "changement de status de la todo" ou la fonction toggleEditMode "mode édition"
+    let timer; // variable pour conserver la référence du timer
     li.addEventListener("click", (event) => {
         event.preventDefault();
-        toggleTodo(index);
+        /*  Si c'est le premier clic nous allons lancer un timer et conserver sa référence. Il va permettre d'exécuter la fonction de rappel au bout de 200 millisecondes. 
+         Si c'est le second ou plus, nous allons supprimer le timer et activer le mode édition. 
+          Au bout de 200 millisecondes, si il n'y a pas eu plus d'un clic, alors le timer n'a pas été annulé et la fonction de rappel est exécutée. Celle-ci va ensuite exécuter 
+        */
+        if (event.detail === 1) {
+            timer = setTimeout(() => {
+                toggleTodo(index);
+            }, 200);
+        } else if (event.detail > 1) {
+            clearTimeout(timer);
+            toggleEditMode(index);
+        }
     });
     return li;
 };
