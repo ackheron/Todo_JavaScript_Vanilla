@@ -36,6 +36,18 @@ button {
     margin: 0 .1875rem;
 }
 
+button.danger {
+    background: #eb2f06;
+}
+
+button.primary {
+    background: #4a69bd
+}
+
+button.success {
+    background: #2ed573
+}
+
 input {
     padding: .5rem .9375rem;
     outline: 0;
@@ -57,6 +69,13 @@ li {
     display: flex;
     align-items: center;
     padding: .625rem 0;
+    cursor: pointer;
+}
+
+li:hover {
+    background: lightblue;
+    border-radius: 5px;
+    padding: 10px 0 10px 5px;
 }
 
 li p,

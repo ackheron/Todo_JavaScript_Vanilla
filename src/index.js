@@ -47,6 +47,7 @@ const createTodoElement = (todo, index) => {
 
     const buttonDelete = document.createElement("button");
     buttonDelete.innerText = "Supprimer";
+    buttonDelete.className = "danger";
     buttonDelete.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -55,6 +56,7 @@ const createTodoElement = (todo, index) => {
 
     const buttonEdit = document.createElement("button");
     buttonEdit.innerText = "Éditer";
+    buttonEdit.className = "primary";
     buttonEdit.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -87,6 +89,7 @@ const createTodoEditElement = (todo, index) => {
 
     const buttonSave = document.createElement("button");
     buttonSave.innerText = "Enregistrer";
+    buttonSave.className = "success";
     buttonSave.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -95,6 +98,7 @@ const createTodoEditElement = (todo, index) => {
 
     const buttonCancel = document.createElement("button");
     buttonCancel.innerText = "Annuler";
+    buttonCancel.className = "primary";
     buttonCancel.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
