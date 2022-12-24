@@ -40,7 +40,7 @@ const displayTodo = () => {
  * Création d'un élément Todo
  * @param {{text: string, done:boolean, editMode: boolean}} todo objet contenu dans le tableau todos
  * @param {number} index nombre index de l'objet courant
- * @returns
+ * @returns {HTMLLIElement} Retour de l'élément HTML "li" en mode normal
  */
 const createTodoElement = (todo, index) => {
     const li = document.createElement("li");
@@ -63,7 +63,7 @@ const createTodoElement = (todo, index) => {
 
     li.innerHTML = `
         <span class="todo ${todo.done ? "done" : ""}"></span>
-        <p>${todo.text}</p>
+        <p class="${todo.done ? "done" : ""}">${todo.text}</p>
     `;
     li.append(buttonEdit, buttonDelete);
     li.addEventListener("click", (event) => {
@@ -77,7 +77,7 @@ const createTodoElement = (todo, index) => {
  * Création d'un élément Todo en mode édition
  * @param {{text: string, done:boolean, editMode: boolean}} todo objet contenu dans le tableau todos
  * @param {number} index nombre index de l'objet courant
- * @returns
+ * @returns {HTMLLIElement} Retour de l'élément HTML "li" en mode edit
  */
 const createTodoEditElement = (todo, index) => {
     const li = document.createElement("li");
@@ -113,6 +113,7 @@ const addTodo = (text) => {
     if (text) {
         todos.push({
             text: `${text[0].toUpperCase()}${text.slice(1)}`,
+            // Interpolation en mode littéral pour avoir une majuscule sur le premier caractère méthode toUpperCase() et la suite de toute la chaîne de caractères à partir de l'index 1 avec la méthode slice()
             done: false,
         });
     }
