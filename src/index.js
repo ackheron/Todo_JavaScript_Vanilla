@@ -2,7 +2,7 @@ import "./style.css";
 
 const ul = document.querySelector("ul");
 const form = document.querySelector("form");
-const input = document.querySelector("form > input");
+const input = document.querySelector("form > input"); // input principal "Ajouter"
 
 const todos = [
     {
@@ -13,7 +13,7 @@ const todos = [
     {
         text: "faire du javascript",
         done: true,
-        editMode: true,
+        editMode: false,
     },
 ];
 
@@ -96,9 +96,9 @@ const createTodoElement = (todo, index) => {
  */
 const createTodoEditElement = (todo, index) => {
     const li = document.createElement("li");
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = todo.text;
+    const editInput = document.createElement("input");
+    editInput.type = "text";
+    editInput.value = todo.text;
 
     const buttonSave = document.createElement("button");
     buttonSave.innerText = "Enregistrer";
@@ -106,13 +106,18 @@ const createTodoEditElement = (todo, index) => {
     buttonSave.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        editTodo(index, input);
+        editTodo(index, editInput);
+        // Fonction asynchrone pour focus le champ input principal après sont ajout dans le dom par la fonction displayTodo()
+        setTimeout(() => {
+            input.focus();
+        }, 200);
     });
 
     // Ajout d'un écouteur sur l'input pour pouvoir enregistrer avec la touche entrée
-    input.addEventListener("keydown", (event) => {
+    editInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
-            editTodo(index, input);
+            editTodo(index, editInput);
+        } else if (event.key === "Escape") {
         }
     });
 
@@ -123,8 +128,18 @@ const createTodoEditElement = (todo, index) => {
         event.preventDefault();
         event.stopPropagation();
         toggleEditMode(index);
+        // Fonction asynchrone pour focus le champ input principal après sont ajout dans le dom par la fonction displayTodo()
+        setTimeout(() => {
+            input.focus();
+        }, 200);
     });
-    li.append(input, buttonCancel, buttonSave);
+    li.append(editInput, buttonCancel, buttonSave);
+
+    // Fonction asynchrone pour focus le champ edit après sont ajout dans le dom par la fonction displayTodo()
+    setTimeout(() => {
+        editInput.focus();
+    }, 200);
+
     return li;
 };
 
